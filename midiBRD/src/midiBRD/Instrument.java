@@ -26,10 +26,6 @@ public class Instrument extends TimerTask {
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(this, 0, 1);;
 	}
-	
-	private void playNote(int currentTickNote) {
-		
-	}
 
 	public void queueNote(int noteToBePlayed) {
 		noteQueue.add(noteToBePlayed);
@@ -41,7 +37,6 @@ public class Instrument extends TimerTask {
 			return;
 				
 		int note = noteQueue.remove() - 48 + (octiveModifier * 12);
-		System.out.println(" " + FFxivNoteToKeyPress.noteToKeyboardMap.get(note));
 		List<Integer> keyToPress = FFxivNoteToKeyPress.noteToKeyboardMap.get(note);
 		
 		for (int key : keyToPress) {
@@ -55,8 +50,6 @@ public class Instrument extends TimerTask {
 			player.keyRelease(keyToPress.get(i));
 			player.delay(8);
 		}
-		
-		player.delay(3000);
 	}
 }
 

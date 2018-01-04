@@ -1,10 +1,8 @@
 package midiBRD;
 
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class Musician extends TimerTask {
+public class Musician {
 	public static final String[] NOTE_NAMES = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 	
 	private DecodedMidi dmidi;
@@ -12,7 +10,7 @@ public class Musician extends TimerTask {
 	private long duration;
 	private long lastPlayAtTick = -1;
 	
-	private long currentTimeMS;
+	private double currentTimeMS = 0;
 	
 	private Instrument instrument;
 	
@@ -21,8 +19,6 @@ public class Musician extends TimerTask {
 		this.dmidi = dmidi;
 		notes = dmidi.getNotes();
 		duration = dmidi.getDuration();
-		
-		start();
 	}
 
 	public void start() {
@@ -35,35 +31,36 @@ public class Musician extends TimerTask {
 		}
 		
 		System.out.println("Starting...");
-		Timer music = new Timer();
+		long lastLoopTime = System.nanoTime();
 		
-		music.schedule(this, 0, 1);
-	}
-	
-	@Override
-	public void run() {
-		if (currentTimeMS > duration) {
-			cancel();
-			System.out.println("End of track");
+		while (true) {
+			long now = System.nanoTime();
+			long deltaTime = now - lastLoopTime;
+			lastLoopTime = now;
+			
+			if (currentTimeMS > duration) {
+				System.out.println("End of track");
+				break;
+			}
+			
+			int currentTickNote;
+			currentTimeMS += deltaTime / 1000000.0;
+			long ticks = currentMsToTick();
+			
+			if (ticks == lastPlayAtTick)
+				continue;
+			
+			if (notes.get(ticks) != null)
+				currentTickNote = notes.get(ticks);
+			else
+				continue;
+			
+	        int octave = (currentTickNote / 12)-5;
+	        int note = currentTickNote % 12;
+			System.out.println("@" + ticks + " " + NOTE_NAMES[note] + " octave " + octave);
+			instrument.queueNote(currentTickNote);
+			lastPlayAtTick = ticks;
 		}
-		
-		int currentTickNote;
-		long ticks = currentMsToTick();
-		currentTimeMS++;
-		
-		if (ticks == lastPlayAtTick)
-			return;
-		
-		if (notes.get(ticks) != null)
-			currentTickNote = notes.get(ticks);
-		else
-			return;
-		
-        int octave = (currentTickNote / 12)-5;
-        int note = currentTickNote % 12;
-		System.out.print("@" + ticks + " " + NOTE_NAMES[note] + " octave " + octave);
-		instrument.queueNote(currentTickNote);
-		lastPlayAtTick = ticks;
 	}
 	
 	public long currentMsToTick() {
