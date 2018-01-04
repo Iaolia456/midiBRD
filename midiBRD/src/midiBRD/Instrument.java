@@ -24,7 +24,7 @@ public class Instrument extends TimerTask {
 		}
 		
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(this, 0, 1);;
+		timer.scheduleAtFixedRate(this, 0, 1);
 	}
 
 	public void queueNote(int noteToBePlayed) {
@@ -42,13 +42,15 @@ public class Instrument extends TimerTask {
 		for (int key : keyToPress) {
 			//System.out.println("press " + key);
 			player.keyPress(key);
-			player.delay(8);
+			player.delay(15);
 		}
+				
+		player.delay(5);
 		
 		for (int i=keyToPress.size() - 1; i>=0; i--) {
 			//System.out.println("release " + keyToPress.get(i));
 			player.keyRelease(keyToPress.get(i));
-			player.delay(8);
+			player.delay(15);
 		}
 	}
 }

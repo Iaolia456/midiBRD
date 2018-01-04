@@ -45,6 +45,7 @@ public class Musician {
 			
 			int currentTickNote;
 			currentTimeMS += deltaTime / 1000000.0;
+			//System.out.println(currentTimeMS);
 			long ticks = currentMsToTick();
 			
 			if (ticks == lastPlayAtTick)
@@ -57,13 +58,13 @@ public class Musician {
 			
 	        int octave = (currentTickNote / 12)-5;
 	        int note = currentTickNote % 12;
-			System.out.println("@" + ticks + " " + NOTE_NAMES[note] + " octave " + octave);
+			System.out.println("@" + ticks + "(" + currentTimeMS + ") " + NOTE_NAMES[note] + " octave " + octave);
 			instrument.queueNote(currentTickNote);
 			lastPlayAtTick = ticks;
 		}
 	}
 	
 	public long currentMsToTick() {
-		return Math.round((float)(currentTimeMS * 1000) / ((float)dmidi.getTempo() / dmidi.getResolution()));
+		return Math.round((currentTimeMS * 1000) / ((float)dmidi.getTempo() / dmidi.getResolution()));
 	}
 }
