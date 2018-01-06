@@ -2,8 +2,9 @@ package midiBRD;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaMessage;
@@ -34,14 +35,13 @@ public class MidiReader {
 	}
 	
 	public DecodedMidi decode() {
-		Map<Long, Integer> notes = new HashMap<>();
-		
-		int lowestNote = 999;
-		int highestNote = 0;
+		List<HashMap<Long, Integer>> noteTracks = new ArrayList<HashMap<Long, Integer>>();
+
 		int bpm;
 		int tempo = 0;
 		
 		for (Track track : midi.getTracks()) {
+			HashMap<Long,Integer> notes = new HashMap<>();
 			for (int i=0; i<track.size(); i++) {
 				MidiEvent event = track.get(i);
                 MidiMessage message = event.getMessage();
@@ -74,17 +74,16 @@ public class MidiReader {
 	                   System.out.println("Note on, " + " key=" + key + " velocity: " + velocity);
 	                    
 	                   notes.put(tick, key);
-	                   
-	                   if (key < lowestNote)
-	                	   lowestNote = key;
-	                   if (key > highestNote)
-	                	   highestNote = key;
                     }
                 }
 			}
+			
+			if (notes.size() != 0)
+				noteTracks.add(notes);
 		}
 		
+		System.out.println("found " + noteTracks.size() + " tracks");
 		long duration = (long)Math.ceil(((midi.getTickLength() / 96.0) * tempo) / 1000.0);
-		return new DecodedMidi(notes, duration, midi.getResolution(), tempo);
+		return new DecodedMidi(noteTracks, duration, midi.getResolution(), tempo);
 	}
 }
