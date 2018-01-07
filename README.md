@@ -15,7 +15,7 @@ In FFXIV, there are 3 octaves plus one note available for the character to play.
 From left to right slot of the hotbar place...
 - **The 1st bar**: the first octave starting from **C(-1)** and climb up the scale until **B(-1)**, including # and ♭ in the same row.
 - **The 2nd bar**: the second octave starting from **C** and climb up the scale until **B**, including # and ♭ in the same row.
-- **The 3rd bar**: the first octave starting from **C(+1)** and climb up the scale until **B(+1)**, including # and ♭ in the same row.
+- **The 3rd bar**: the last octave starting from **C(+1)** and climb up the scale until **B(+1)**, including # and ♭ in the same row.
 - **The 4th bar**: the lonely **C(+2)** note. The last slot of this bar can be any emote/skill, midiBRD will press this emote/skill automatically at the start and at the end of each midi track it performed _[WIP]_.
 
 #### Shortcut key configuration
