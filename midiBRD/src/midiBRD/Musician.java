@@ -16,8 +16,8 @@ public class Musician {
 	
 	private DecodedMidi dmidi;
 	private long duration;
-	private long lastPlayAtTick = -1;
 	
+	private long lastPlayAtTick = -1;
 	private double currentTimeMS = 0;
 	
 	private Instrument instrument;
@@ -39,14 +39,21 @@ public class Musician {
 
 	public void start(boolean isPlayAllTrack) {
 		//wait for enter key pressed, play metronome sound, and wait 1 second
-		System.out.println("Press enter to start playback");
-		betweenTrackWait();
-		System.out.println("Start playing track 0");
+		System.out.println("Press enter to start playback from the beginning or input starting track number (starting from 0)");
+		int currentTrack = 0;
+		try {
+			currentTrack = Integer.parseInt(betweenTrackWait());
+		} catch (NumberFormatException e) {
+			currentTrack = 0;
+		}
+		System.out.println("Start playing track " + currentTrack);
+		
+		//play custom emote/skill on the last slot of 4th bar
+		playCustomEmote();
 		
 		//reset the timing and get the first note track
 		long lastLoopTime = System.nanoTime();
-		int currentTrack = 0;
-		Map<Long, Integer> notes = dmidi.getNotesAtTrack(0);
+		Map<Long, Integer> notes = dmidi.getNotesAtTrack(currentTrack);
 		
 		//player loop
 		while (true) {
@@ -59,25 +66,36 @@ public class Musician {
 			if (currentTimeMS > duration) {
 				System.out.println("End of track " + currentTrack);
 				
+				//multitrack mode
 				if (isPlayAllTrack) {
+					//not the last track, still has some tracks left to play
 					if (currentTrack < dmidi.getTrackCount() - 1) {
-						//get the next track
+						playCustomEmote();
 						currentTrack++;
-						notes = dmidi.getNotesAtTrack(currentTrack);
 						
-						//wait for enter key pressed, play metronome sound, and wait 1 second
-						System.out.println("Press Enter key to play the next track...");
-						betweenTrackWait();
+						//if 'r' was input. repeat the same track
+						if(promptForNextTrack()) {
+							currentTrack--;
+							System.out.println("Repeating track " + currentTrack);
+						}
+						
+						System.out.println("Start playing track " + currentTrack);
+						
+						//play custom emote
+						playCustomEmote();
 						
 						//reset timing clock and start playing the next track
-						System.out.println("Start playing track " + currentTrack);
+						notes = dmidi.getNotesAtTrack(currentTrack);
 						currentTimeMS = 0;
 						lastPlayAtTick = -1;
 						lastLoopTime = System.nanoTime();
+						
 						continue;
 					}
 					else {
 						//all track played
+						playCustomEmote();
+						
 						System.out.println("End of file. Press enter to exit");
 						waitForKeyPress();
 						System.exit(0);
@@ -93,6 +111,7 @@ public class Musician {
 				}
 			}
 			
+			//not end of the track
 			int currentTickNote;
 			currentTimeMS += deltaTime / 1000000.0;
 			long ticks = currentMsToTick();
@@ -116,18 +135,41 @@ public class Musician {
 		}
 	}
 
-	private void betweenTrackWait() {
-		waitForKeyPress();
+	private void waitForChangeWindowFocus() {
 		waitForMilSecond(3000);
+	}
+
+	private boolean promptForNextTrack() {
+		//wait for enter key pressed, play metronome sound, and wait 1 second
+		System.out.println("Press Enter key to play the next track or enter 'r' to repeat this track");
+		String input = betweenTrackWait();
+		
+		//repeat the same track
+		if (input.equals("r") || input.equals("R")) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	private void playCustomEmote() {
+		waitForMilSecond(2000);
+		instrument.queueNote(999);
+		waitForMilSecond(5000);
+	}
+	
+	private String betweenTrackWait() {
+		String input = waitForKeyPress();
+		waitForChangeWindowFocus();
 		playVideoStartGuideSound();
 		waitForMilSecond(1000);
+		return input;
 	}
 	
 	private void waitForMilSecond(long milSecond) {
 		try {
 			Thread.sleep(milSecond);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -138,15 +180,17 @@ public class Musician {
 		waitForMilSecond(metronomeClip.getMicrosecondLength() / 1000);
 	}
 	
-	private void waitForKeyPress() {
+	private String waitForKeyPress() {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String input = "";
 		
 		try {
-			br.readLine();
+			input = br.readLine();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return input;
 	}
 	
 	public long currentMsToTick() {

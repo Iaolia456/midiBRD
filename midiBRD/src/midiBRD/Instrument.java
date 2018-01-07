@@ -36,7 +36,16 @@ public class Instrument extends TimerTask {
 		if (noteQueue.isEmpty())
 			return;
 				
-		int note = noteQueue.remove() - 48 + (octiveModifier * 12);
+		int noteInQueue = noteQueue.remove();
+		int note = 0;
+		
+		if (noteInQueue == 999) {
+			note = 999;
+		}
+		else {
+			note = noteInQueue - 48 + (octiveModifier * 12);
+		}
+		
 		List<Integer> keyToPress = FFxivNoteToKeyPress.noteToKeyboardMap.get(note);
 		
 		for (int key : keyToPress) {

@@ -60,6 +60,7 @@ public class FFxivNoteToKeyPress {
 		noteToKeyboardMap.put(44, Arrays.asList(KeyEvent.VK_ALT, KeyEvent.VK_9));
 		noteToKeyboardMap.put(45, Arrays.asList(KeyEvent.VK_ALT, KeyEvent.VK_0));
 		noteToKeyboardMap.put(46, Arrays.asList(KeyEvent.VK_ALT, KeyEvent.VK_MINUS));
-		noteToKeyboardMap.put(47, Arrays.asList(KeyEvent.VK_ALT, KeyEvent.VK_EQUALS));
+		
+		noteToKeyboardMap.put(999, Arrays.asList(KeyEvent.VK_ALT, KeyEvent.VK_EQUALS));
 	}
 }
