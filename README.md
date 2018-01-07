@@ -1,6 +1,6 @@
 # midiBRD
 
-midiBRD is an midi files to key stroke application. It translate notes event in midi files to keyboard presses which can be used to trigger a skill placed on hotbars of the game [Final Fantasy XIV (FFXIV)](https://www.finalfantasyxiv.com/ "Final Fantasy XIV Homepage"). Its main objective is to take advantage of the performance feature of the game. This is the work in progress project.
+midiBRD is an midi files to key stroke application. It translate notes event in midi files to keyboard presses which can be used to trigger skills placed on hotbars of the game [Final Fantasy XIV (FFXIV)](https://www.finalfantasyxiv.com/ "Final Fantasy XIV Homepage"). Its main objective is to take advantage of the performance feature of the game. This is the work in progress project.
 
 
 ## Just any midi file?
@@ -16,7 +16,7 @@ From left to right slot of the hotbar place...
 - **The 1st bar**: the first octave starting from **C(-1)** and climb up the scale until **B(-1)**, including # and ♭ in the same row.
 - **The 2nd bar**: the second octave starting from **C** and climb up the scale until **B**, including # and ♭ in the same row.
 - **The 3rd bar**: the last octave starting from **C(+1)** and climb up the scale until **B(+1)**, including # and ♭ in the same row.
-- **The 4th bar**: the lonely **C(+2)** note. The last slot of this bar can be any emote/skill, midiBRD will press this emote/skill automatically at the start and at the end of each midi track it performed _[WIP]_.
+- **The 4th bar**: the lonely **C(+2)** note. The last slot of this bar can be any emote/skill, midiBRD will press this emote/skill automatically at the start and at the end of each midi track it performed.
 
 #### Shortcut key configuration
 The key combination used to trigger the skill in the hotbar also has to be configured as follow. This is because the midiBRD will press specific key combination to trigger a skill (or a note) placed on the character's hotbar.
