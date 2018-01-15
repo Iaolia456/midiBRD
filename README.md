@@ -27,5 +27,9 @@ The key combination used to trigger the skill in the hotbar also has to be confi
 
 You can change the keyboard shortcut from within one of the FFXIV confusing option menus... Sorry I can't remember which option menu, they have too many...
 
+## Demonstration
+I have made a couple songs using midiBRD, please check it out here:
+[midiBRD Youtube channel](https://www.youtube.com/channel/UC8bJVV_JO8bzOjbgcyzBrhQ)
+
 ## Additional Note
 To play safe, **DO NOT USE THIS SOFTWARE TO PERFORMS ANY SONG THAT SQUARE ENIX DOES NOT OWN THE COPYRIGHT.** This means basically only perform Final Fantasy songs only. They are serious about copyright and stuff... We don't want to force them to remove this feature, right?
