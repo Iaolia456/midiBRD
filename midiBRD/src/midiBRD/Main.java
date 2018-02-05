@@ -2,8 +2,8 @@ package midiBRD;
 
 public class Main {
 	public static void main(String[] args) {
-		String filename = "multitrack-test.mid";
-		MidiReader reader = new MidiReader("D://Leo Aiolia//Project//Programming//Java//NORMAL//midiBRD//midi//" + filename);
+		String filename = "";
+		MidiReader reader = new MidiReader("" + filename);
 		DecodedMidi dmidi = reader.decode();
 		
 		Instrument ins = new Instrument();
