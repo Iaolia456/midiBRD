@@ -16,6 +16,7 @@ There are some requirements of the midi file that midiBRD can read or _perform_ 
 
 ## Shortcut key configuration for performance mode
 The key combination used to play notes in performance mode needs to be configured as follow. This is because the midiBRD will press specific key combination to play a note in performance mode's UI.
+
 **Please use the default key binding in keyboard mode**
 
 ## Demonstration
