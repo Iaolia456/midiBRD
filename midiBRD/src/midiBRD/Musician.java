@@ -130,7 +130,7 @@ public class Musician {
 	        int octave = (currentTickNote / 12)-5;
 	        int note = currentTickNote % 12;
 			System.out.println("@" + ticks + "(" + currentTimeMS + ") " + NOTE_NAMES[note] + " octave " + octave);
-			instrument.queueNote(currentTickNote);
+			instrument.queueNote(currentTickNote, ticks);
 			lastPlayAtTick = ticks;
 		}
 	}
@@ -153,9 +153,9 @@ public class Musician {
 	}
 
 	private void playCustomEmote() {
-		waitForMilSecond(2000);
+		/*waitForMilSecond(2000);
 		instrument.queueNote(999);
-		waitForMilSecond(5000);
+		waitForMilSecond(5000);*/
 	}
 	
 	private String betweenTrackWait() {
