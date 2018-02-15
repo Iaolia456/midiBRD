@@ -11,6 +11,7 @@ import java.util.TimerTask;
 public class Instrument extends TimerTask {
 	public static int octiveModifier = 0;
 	
+	//one action use 3x DELAY_BETWEEN_KEY_ACTION and 1x KEY_HOLD_DELAY
 	private final int DELAY_BETWEEN_KEY_ACTION = 10;
 	private final int KEY_HOLD_DELAY = 15;
 	
