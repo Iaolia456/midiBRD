@@ -2,8 +2,7 @@ package midiBRD;
 
 public class Main {
 	public static void main(String[] args) {
-		String filename = "";
-		MidiReader reader = new MidiReader("" + filename);
+		MidiReader reader = new MidiReader(args[0]);
 		DecodedMidi dmidi = reader.decode();
 		
 		Instrument ins = new Instrument();
